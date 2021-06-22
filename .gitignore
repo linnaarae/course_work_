@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+.idea
+*.sublime*
+.vscode
+*.log*
+server/node_modules/
+server/package-lock.json
+website/src/node_modules/
+website/public/
+server/package-lock.json
