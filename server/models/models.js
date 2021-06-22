@@ -1,9 +1,8 @@
-const sequelize = require('./db')
+const sequelize = require('../db')
 const { DataTypes } = require('sequelize')
-const { _attributes } = require('../db')
 
 
-const User = sequelize.define(modelName: 'user', attributes: {
+const User = sequelize.define('user', {
     id_user: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     login: { type: DataTypes.STRING },
     password: { type: DataTypes.STRING },
@@ -14,59 +13,65 @@ const User = sequelize.define(modelName: 'user', attributes: {
     age: { type: DataTypes.STRING },
 })
 
-const Author = sequelize.define(modelName: 'author', attributes: {
+const Author = sequelize.define('author', {
     id_author: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     login: { type: DataTypes.STRING },
     name: { type: DataTypes.STRING },
     surname: { type: DataTypes.STRING },
 })
 
-const Position = sequelize.define(modelName: 'position', attributes: {
+const Position = sequelize.define('position', {
     id_user: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     position: { type: DataTypes.STRING },
 })
 
-const Comments = sequelize.define(modelName: 'comments', attributes: {
-    id_author: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+const Comment = sequelize.define('comment', {
     id_comment: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    id_news: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    id_event: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    text: { type: DataTypes.STRING, allowNull: false },
 })
 
-const News = sequelize.define(modelName: 'news', attributes: {
+const News = sequelize.define('news', {
     id_news: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     date_news: { type: DataTypes.INTEGER },
     title: { type: DataTypes.STRING },
-    id_author: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+
 })
 
-const Events = sequelize.define(modelName: 'events', attributes: {
+const Events = sequelize.define('events', {
     id_event: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     date_event: { type: DataTypes.INTEGER },
     title: { type: DataTypes.STRING },
     team: { type: DataTypes.STRING },
     place: { type: DataTypes.STRING },
     time: { type: DataTypes.INTEGER },
-    id_author: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 })
 
-Comments.hasOne(Author)
-Author.belongsTo(Comments)
+Comment.hasOne(Author)
+Author.belongsTo(Comment)
 
-Comments.hasOne(Events)
-Events.belongsTo(Comments)
+Comment.hasOne(Events)
+Events.belongsTo(Comment)
 
-Comments.hasOne(News)
-News.belongsTo(Comments)
+Comment.hasOne(News)
+News.belongsTo(Comment)
 
 Position.hasOne(User)
 User.belongsTo(Position)
 
-Comments.hasOne(News)
-News.belongsTo(Comments)
+Comment.hasOne(News)
+News.belongsTo(Comment)
 
 Author.hasMany(News)
 News.belongsTo(Author)
 
 Author.hasMany(Events)
 Events.belongsTo(Author)
+
+module.exports = {
+    News,
+    Events,
+    Author,
+    User,
+    Comment,
+    Position
+}
