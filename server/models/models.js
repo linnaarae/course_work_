@@ -15,14 +15,12 @@ const User = sequelize.define('user', {
 
 const Author = sequelize.define('author', {
     id_author: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    login: { type: DataTypes.STRING },
-    name: { type: DataTypes.STRING },
-    surname: { type: DataTypes.STRING },
+    nick: { type: DataTypes.STRING },
 })
 
-const Position = sequelize.define('position', {
+const Moderator = sequelize.define('moderator', {
     id_user: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    position: { type: DataTypes.STRING },
+    nick: { type: DataTypes.STRING },
 })
 
 const Comment = sequelize.define('comment', {
@@ -55,8 +53,11 @@ Events.belongsTo(Comment)
 Comment.hasOne(News)
 News.belongsTo(Comment)
 
-Position.hasOne(User)
-User.belongsTo(Position)
+User.hasOne(Author)
+Author.belongsTo(User)
+
+Moderator.hasOne(User)
+User.belongsTo(Moderator)
 
 Comment.hasOne(News)
 News.belongsTo(Comment)
@@ -73,5 +74,5 @@ module.exports = {
     Author,
     User,
     Comment,
-    Position
+    Moderator
 }
